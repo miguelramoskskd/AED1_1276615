@@ -3,19 +3,20 @@ Disciplina  : Algortimo e Estrutura de Dados 2026S1
 Nome        : Miguel Otávio Cardoso Ramos
 Linguagem   : C
 Problema    : https://judge.beecrowd.com/pt/problems/view/1383
-Data        : 23/08/2026
-Objetivo    : Ler 3 casos de matriz 9x9 e verificar se corresponde à uma solução de SUDOKU.
-Dificuldade : Transferir a lógica do Sudoku para o código. Elaborar o algoritmo da verificação dos quadrantes.
+Data        : 28/08/2026
+Objetivo    : Ler 3 casos de matriz 9x9 e verificar se corresponde à uma solução de SUDOKU, utilizando alocação dinâmica.
+Dificuldade : Conceito dos ponteiros ainda estava bem nebuloso para mim, ali no começo da alocação mesmo. Não sabia quando colocar um asterisco ou dois.
 Uso de IA   : Apoio da IA, pedi à ela que não me desse respostas, apenas acompanhasse meu processo.
 -------------------------------------------------------------------------- */
 
 #include <stdio.h>
+#include <stdlib.h>
  
 int main() {
 
     int valido;
     int n;
-    int matriz[9][9];
+    int **m;
 
     scanf("%d", &n);
 
@@ -23,10 +24,15 @@ int main() {
 
         valido = 1;
 
+        m = malloc(9*sizeof(*m));
+        for(int i=0; i<9; i++){
+            m[i] = malloc(9*sizeof(int));
+        }
+
         // Leitura da matriz
         for(int k = 0; k < 9; k++){
             for(int j = 0; j < 9; j++){
-                scanf("%d", &matriz[k][j]);
+                scanf("%d", &m[k][j]);
             }
         }
         
@@ -34,7 +40,7 @@ int main() {
         for(int k = 0; k < 9; k++){
             for(int i = 0; i < 9; i++){
                 for(int j = i + 1; j < 9; j++){
-                    if(matriz[k][i] == matriz[k][j]){
+                    if(m[k][i] == m[k][j]){
                         valido = 0;
                     }
                 }
@@ -45,7 +51,7 @@ int main() {
         for(int k = 0; k < 9; k++){
             for(int i = 0; i < 9; i++){
                 for(int j = i + 1; j < 9; j++){
-                    if(matriz[i][k] == matriz[j][k]){
+                    if(m[i][k] == m[j][k]){
                         valido = 0;
                     }
                 }
@@ -61,7 +67,7 @@ int main() {
 
                 for(int i = k; i < k + 3; i++){
                     for(int j = l; j < l + 3; j++){
-                        quadrante[pos] = matriz[i][j];
+                        quadrante[pos] = m[i][j];
                         pos++;
                     }
                 }
@@ -83,6 +89,11 @@ int main() {
             printf("SIM\n\n");
         else
             printf("NAO\n\n");
+
+        for(int i=0; i<9; i++){
+            free(m[i]);
+        }
+        free(m);
     }
 
     return 0;
