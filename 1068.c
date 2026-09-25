@@ -2,10 +2,10 @@
 Disciplina  : Algortimo e Estrutura de Dados 2026S1
 Nome        : Miguel Otávio Cardoso Ramos
 Linguagem   : C
-Problema    : https://judge.beecrowd.com/pt/problems/view/1080
+Problema    : https://judge.beecrowd.com/pt/problems/view/1068
 Data        : 21/09/2026
-Objetivo    : Ler 100 valorees inteiros e apresentar o maior valor e sua respectiva posição
-Dificuldade : Ter a sacada de colocar o primeiro numero como maior. Relembrar estruturas.
+Objetivo    : Ler uma expressao e verificar se os parentêses estão balanceados utilizando pilha encadeada.
+Dificuldade : Tratamento da pilha vazia e implementar operações de pop e push.
 Uso de IA   : Usei IA conversando por chat de voz como apoio, pedi que não me desse respostas prontos. Consultei em algumas nomenclaturas de string.
 -------------------------------------------------------------------------- */
 
@@ -42,8 +42,9 @@ void pop(struct No **topo) {
 
 int main(){
 
-    char expressao[120];
-    fgets(expressao, 120, stdin);
+    char expressao[1001];
+    
+    while(fgets(expressao, 1001, stdin) != NULL) {
 
     if(expressao[strlen(expressao) - 1] == '\n'){
         expressao[strlen(expressao) - 1] = '\0';
@@ -71,9 +72,11 @@ int main(){
     }
 
     if(incorreta == 1 || topo!=NULL){ // se eu descobri algum erro ou sobrou algo na pilha
-        printf("incorret\n");
+        printf("incorrect\n");
     } else{
         printf("correct\n");
+    }
+
     }
 
     return 0;
